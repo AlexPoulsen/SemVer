@@ -61,7 +61,7 @@ struct Identifier {
             return this.num <= other.num;
         } else if (this.which == NUM) && (other.which == STR) {
             printf("num && str\n");
-            return false;
+            return true;
         } else if (this.which == STR) && (other.which == NUM) {
             printf("str && num\n");
             return false;
@@ -101,7 +101,7 @@ struct Identifier {
             return false;
         } else if (this.which == STR) && (other.which == NUM) {
             printf("str && num\n");
-            return false;
+            return true;
         } else if (this.which == STR) && (other.which == STR) {
             printf("str && str\n");
             var result: Bool = true;
@@ -135,10 +135,10 @@ struct Identifier {
             return this.num != other.num;
         } else if (this.which == NUM) && (other.which == STR) {
             printf("num && str\n");
-            return false;
+            return true;
         } else if (this.which == STR) && (other.which == NUM) {
             printf("str && num\n");
-            return false;
+            return true;
         } else if (this.which == STR) && (other.which == STR) {
             printf("str && str\n");
             var result: Bool = false;
@@ -175,7 +175,7 @@ struct Identifier {
             return false;
         } else if (this.which == STR) && (other.which == NUM) {
             printf("str && num\n");
-            return false;
+            return true;
         } else if (this.which == STR) && (other.which == STR) {
             printf("str && str\n");
             var result: Bool = false;
@@ -209,7 +209,7 @@ struct Identifier {
             return this.num < other.num;
         } else if (this.which == NUM) && (other.which == STR) {
             printf("num && str\n");
-            return false;
+            return true;
         } else if (this.which == STR) && (other.which == NUM) {
             printf("str && num\n");
             return false;
