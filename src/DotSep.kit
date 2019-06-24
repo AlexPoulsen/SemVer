@@ -64,7 +64,14 @@ struct DotSep {
 
 function main() {
     var ds1: DotSep = DotSep.newFromString("abfe.abde.123.@^at.a34");
+    var ds2: DotSep = DotSep.newFromString("abfe.abde.123.@^at.a34");
     for n in ds1.identifiers {
         n.print();
     }
+    printf("%s\n\n", if ds1.identifiers[0] == ds1.identifiers[1] then "true" else "false");
+    printf("%s\n\n", if ds1.identifiers[0] <= ds1.identifiers[1] then "true" else "false");
+    printf("%s\n\n", if ds1.identifiers[0] >= ds1.identifiers[1] then "true" else "false");
+    printf("%s\n\n", if ds1.identifiers[0] != ds1.identifiers[1] then "true" else "false");
+    printf("%s\n\n", if ds1.identifiers[0] <  ds1.identifiers[1] then "true" else "false");
+    printf("%s\n\n", if ds1.identifiers[0] >  ds1.identifiers[1] then "true" else "false");
 }

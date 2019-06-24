@@ -17,4 +17,259 @@ struct Identifier {
             printf("alphanumeric identifier `%s`\n", this.str);
         }
     }
+
+    function eq(other: Identifier) {
+        if (this.which == NUM) && (other.which == NUM) {
+            printf("num && num\n");
+            return this.num == other.num;
+        } else if (this.which == NUM) && (other.which == STR) {
+            printf("num && str\n");
+            return false;
+        } else if (this.which == STR) && (other.which == NUM) {
+            printf("str && num\n");
+            return false;
+        } else if (this.which == STR) && (other.which == STR) {
+            printf("str && str\n");
+            var result: Bool = true;
+            printf("%s == %s\n", this.str, other.str);
+            printf("%d, %d\n", strlen(this.str), strlen(other.str));
+            for n in 0 ... if strlen(this.str) > strlen(other.str) then strlen(this.str) else strlen(other.str) {
+                var thisChar: Char;
+                var otherChar: Char;
+                if n < strlen(this.str) {
+                    thisChar = this.str[n];
+                } else {
+                    thisChar = c'\0';
+                }
+                if n < strlen(other.str) {
+                    otherChar = other.str[n];
+                } else {
+                    otherChar = c'\0';
+                }
+                if thisChar == otherChar {
+                    result &= true;
+                } else {
+                    result &= false;
+                }
+                printf("%c == %c = %s\n", thisChar, otherChar, if thisChar == otherChar then "true" else "false");
+            }
+            return result;
+        } else {
+            printf("Error: uninitialized identifier\n");
+        }
+    }
+
+    function le(other: Identifier) {
+        if (this.which == NUM) && (other.which == NUM) {
+            printf("num && num\n");
+            return this.num <= other.num;
+        } else if (this.which == NUM) && (other.which == STR) {
+            printf("num && str\n");
+            return false;
+        } else if (this.which == STR) && (other.which == NUM) {
+            printf("str && num\n");
+            return false;
+        } else if (this.which == STR) && (other.which == STR) {
+            printf("str && str\n");
+            var result: Bool = true;
+            printf("%s <= %s\n", this.str, other.str);
+            printf("%d, %d\n", strlen(this.str), strlen(other.str));
+            for n in 0 ... if strlen(this.str) > strlen(other.str) then strlen(this.str) else strlen(other.str) {
+                var thisChar: Char;
+                var otherChar: Char;
+                if n < strlen(this.str) {
+                    thisChar = this.str[n];
+                } else {
+                    thisChar = c'\0';
+                }
+                if n < strlen(other.str) {
+                    otherChar = other.str[n];
+                } else {
+                    otherChar = c'\0';
+                }
+                if thisChar <= otherChar {
+                    result &= true;
+                } else {
+                    result &= false;
+                }
+                printf("%c <= %c = %s\n", thisChar, otherChar, if thisChar <= otherChar then "true" else "false");
+            }
+            return result;
+        } else {
+            printf("Error: uninitialized identifier\n");
+        }
+    }
+
+    function ge(other: Identifier) {
+        if (this.which == NUM) && (other.which == NUM) {
+            printf("num && num\n");
+            return this.num >= other.num;
+        } else if (this.which == NUM) && (other.which == STR) {
+            printf("num && str\n");
+            return false;
+        } else if (this.which == STR) && (other.which == NUM) {
+            printf("str && num\n");
+            return false;
+        } else if (this.which == STR) && (other.which == STR) {
+            printf("str && str\n");
+            var result: Bool = true;
+            printf("%s >= %s\n", this.str, other.str);
+            printf("%d, %d\n", strlen(this.str), strlen(other.str));
+            for n in 0 ... if strlen(this.str) > strlen(other.str) then strlen(this.str) else strlen(other.str) {
+                var thisChar: Char;
+                var otherChar: Char;
+                if n < strlen(this.str) {
+                    thisChar = this.str[n];
+                } else {
+                    thisChar = c'\0';
+                }
+                if n < strlen(other.str) {
+                    otherChar = other.str[n];
+                } else {
+                    otherChar = c'\0';
+                }
+                if thisChar >= otherChar {
+                    result &= true;
+                } else {
+                    result &= false;
+                }
+                printf("%c >= %c = %s\n", thisChar, otherChar, if thisChar >= otherChar then "true" else "false");
+            }
+            return result;
+        } else {
+            printf("Error: uninitialized identifier\n");
+        }
+    }
+
+    function ne(other: Identifier) {
+        if (this.which == NUM) && (other.which == NUM) {
+            printf("num && num\n");
+            return this.num != other.num;
+        } else if (this.which == NUM) && (other.which == STR) {
+            printf("num && str\n");
+            return false;
+        } else if (this.which == STR) && (other.which == NUM) {
+            printf("str && num\n");
+            return false;
+        } else if (this.which == STR) && (other.which == STR) {
+            printf("str && str\n");
+            var result: Bool = false;
+            printf("%s == %s\n", this.str, other.str);
+            printf("%d, %d\n", strlen(this.str), strlen(other.str));
+            for n in 0 ... if strlen(this.str) > strlen(other.str) then strlen(this.str) else strlen(other.str) {
+                var thisChar: Char;
+                var otherChar: Char;
+                if n < strlen(this.str) {
+                    thisChar = this.str[n];
+                } else {
+                    thisChar = c'\0';
+                }
+                if n < strlen(other.str) {
+                    otherChar = other.str[n];
+                } else {
+                    otherChar = c'\0';
+                }
+                if thisChar != otherChar {
+                    result |= true;
+                } else {
+                    result |= false;
+                }
+                printf("%c != %c = %s\n", thisChar, otherChar, if thisChar != otherChar then "true" else "false");
+            }
+            return result;
+        } else {
+            printf("Error: uninitialized identifier\n");
+        }
+    }
+
+    function gt(other: Identifier) {
+        if (this.which == NUM) && (other.which == NUM) {
+            printf("num && num\n");
+            return this.num > other.num;
+        } else if (this.which == NUM) && (other.which == STR) {
+            printf("num && str\n");
+            return false;
+        } else if (this.which == STR) && (other.which == NUM) {
+            printf("str && num\n");
+            return false;
+        } else if (this.which == STR) && (other.which == STR) {
+            printf("str && str\n");
+            var result: Bool = false;
+            printf("%s > %s\n", this.str, other.str);
+            printf("%d, %d\n", strlen(this.str), strlen(other.str));
+            for n in 0 ... if strlen(this.str) > strlen(other.str) then strlen(this.str) else strlen(other.str) {
+                var thisChar: Char;
+                var otherChar: Char;
+                if n < strlen(this.str) {
+                    thisChar = this.str[n];
+                } else {
+                    thisChar = c'\0';
+                }
+                if n < strlen(other.str) {
+                    otherChar = other.str[n];
+                } else {
+                    otherChar = c'\0';
+                }
+                if thisChar > otherChar {
+                    result |= true;
+                } else {
+                    result |= false;
+                }
+                printf("%c > %c = %s\n", thisChar, otherChar, if thisChar > otherChar then "true" else "false");
+            }
+            return result;
+        } else {
+            printf("Error: uninitialized identifier\n");
+        }
+    }
+
+    function lt(other: Identifier) {
+        if (this.which == NUM) && (other.which == NUM) {
+            printf("num && num\n");
+            return this.num < other.num;
+        } else if (this.which == NUM) && (other.which == STR) {
+            printf("num && str\n");
+            return false;
+        } else if (this.which == STR) && (other.which == NUM) {
+            printf("str && num\n");
+            return false;
+        } else if (this.which == STR) && (other.which == STR) {
+            printf("str && str\n");
+            var result: Bool = false;
+            printf("%s < %s\n", this.str, other.str);
+            printf("%d, %d\n", strlen(this.str), strlen(other.str));
+            for n in 0 ... if strlen(this.str) > strlen(other.str) then strlen(this.str) else strlen(other.str) {
+                var thisChar: Char;
+                var otherChar: Char;
+                if n < strlen(this.str) {
+                    thisChar = this.str[n];
+                } else {
+                    thisChar = c'\0';
+                }
+                if n < strlen(other.str) {
+                    otherChar = other.str[n];
+                } else {
+                    otherChar = c'\0';
+                }
+                if thisChar < otherChar {
+                    result |= true;
+                } else {
+                    result |= false;
+                }
+                printf("%c < %c = %s\n", thisChar, otherChar, if thisChar < otherChar then "true" else "false");
+            }
+            return result;
+        } else {
+            printf("Error: uninitialized identifier\n");
+        }
+    }
+
+    rules {
+        (${one: Identifier} == ${two: Identifier}) => $one.eq($two);
+        (${one: Identifier} <= ${two: Identifier}) => $one.le($two);
+        (${one: Identifier} >= ${two: Identifier}) => $one.ge($two);
+        (${one: Identifier} != ${two: Identifier}) => $one.ne($two);
+        (${one: Identifier} >  ${two: Identifier}) => $one.gt($two);
+        (${one: Identifier} <  ${two: Identifier}) => $one.lt($two);
+    }
 }
