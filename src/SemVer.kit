@@ -26,12 +26,12 @@ struct SemVer {
         this.patch = 0;
         if prerelease != "" && prerelease != null {
             this.prerelease = prerelease;
-        } else if prerelease != null {
+        } else if prerelease == null {
             this.prerelease = "";
         }
         if buildmeta != "" && buildmeta != null {
             this.buildmeta = buildmeta;
-        } else if buildmeta != null {
+        } else if buildmeta == null {
             this.buildmeta = "";
         }
     }
@@ -41,12 +41,12 @@ struct SemVer {
         this.patch = 0;
         if prerelease != "" && prerelease != null {
             this.prerelease = prerelease;
-        } else if prerelease != null {
+        } else if prerelease == null {
             this.prerelease = "";
         }
         if buildmeta != "" && buildmeta != null {
             this.buildmeta = buildmeta;
-        } else if buildmeta != null {
+        } else if buildmeta == null {
             this.buildmeta = "";
         }
     }
@@ -55,12 +55,12 @@ struct SemVer {
         this.patch += 1;
         if prerelease != "" && prerelease != null {
             this.prerelease = prerelease;
-        } else if prerelease != null {
+        } else if prerelease == null {
             this.prerelease = "";
         }
         if buildmeta != "" && buildmeta != null {
             this.buildmeta = buildmeta;
-        } else if buildmeta != null {
+        } else if buildmeta == null {
             this.buildmeta = "";
         }
     }
