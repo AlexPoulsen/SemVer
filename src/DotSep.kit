@@ -62,19 +62,185 @@ struct DotSep {
             identifiers
         };
     }
+
+    function eq(other: DotSep) {
+        var result: Bool = true;
+        for n in 0 ... if this.identifiers.length > other.identifiers.length then this.identifiers.length else other.identifiers.length {
+            var thisIden: Identifier;
+            var otherIden: Identifier;
+            var hasIden: Bool = false;
+            if n < this.identifiers.length {
+                thisIden = this.identifiers[n];
+                hasIden = true;
+            }
+            if n < other.identifiers.length {
+                otherIden = other.identifiers[n];
+                hasIden &= true;
+            } else {
+                hasIden &= false;
+            }
+            if hasIden {
+                result &= thisIden == otherIden;
+            } else {
+                result &= false;
+            }
+        }
+        return result;
+    }
+
+    function le(other: DotSep) {
+        var result: Bool = true;
+        for n in 0 ... if this.identifiers.length > other.identifiers.length then this.identifiers.length else other.identifiers.length {
+            var thisIden: Identifier;
+            var otherIden: Identifier;
+            var hasIden: Bool = false;
+            if n < this.identifiers.length {
+                thisIden = this.identifiers[n];
+                hasIden = true;
+            }
+            if n < other.identifiers.length {
+                otherIden = other.identifiers[n];
+                hasIden &= true;
+            } else {
+                hasIden &= false;
+            }
+            if hasIden {
+                result &= thisIden <= otherIden;
+            } else {
+                result &= true;
+            }
+        }
+        return result;
+    }
+
+    function ge(other: DotSep) {
+        var result: Bool = true;
+        for n in 0 ... if this.identifiers.length > other.identifiers.length then this.identifiers.length else other.identifiers.length {
+            var thisIden: Identifier;
+            var otherIden: Identifier;
+            var hasIden: Bool = false;
+            if n < this.identifiers.length {
+                thisIden = this.identifiers[n];
+                hasIden = true;
+            }
+            if n < other.identifiers.length {
+                otherIden = other.identifiers[n];
+                hasIden &= true;
+            } else {
+                hasIden &= false;
+            }
+            if hasIden {
+                result &= thisIden >= otherIden;
+            } else {
+                result &= false;
+            }
+        }
+        return result;
+    }
+
+    function ne(other: DotSep) {
+        var result: Bool = false;
+        for n in 0 ... if this.identifiers.length > other.identifiers.length then this.identifiers.length else other.identifiers.length {
+            var thisIden: Identifier;
+            var otherIden: Identifier;
+            var hasIden: Bool = false;
+            if n < this.identifiers.length {
+                thisIden = this.identifiers[n];
+                hasIden = true;
+            }
+            if n < other.identifiers.length {
+                otherIden = other.identifiers[n];
+                hasIden &= true;
+            } else {
+                hasIden &= false;
+            }
+            if hasIden {
+                result |= thisIden != otherIden;
+            } else {
+                result |= true;
+            }
+        }
+        return result;
+    }
+
+    function gt(other: DotSep) {
+        var result: Bool = false;
+        for n in 0 ... if this.identifiers.length > other.identifiers.length then this.identifiers.length else other.identifiers.length {
+            var thisIden: Identifier;
+            var otherIden: Identifier;
+            var hasIden: Bool = false;
+            if n < this.identifiers.length {
+                thisIden = this.identifiers[n];
+                hasIden = true;
+            }
+            if n < other.identifiers.length {
+                otherIden = other.identifiers[n];
+                hasIden &= true;
+            } else {
+                hasIden &= false;
+            }
+            if hasIden {
+                result |= thisIden > otherIden;
+            } else {
+                result |= false;
+            }
+        }
+        return result;
+    }
+
+    function lt(other: DotSep) {
+        var result: Bool = false;
+        for n in 0 ... if this.identifiers.length > other.identifiers.length then this.identifiers.length else other.identifiers.length {
+            var thisIden: Identifier;
+            var otherIden: Identifier;
+            var hasIden: Bool = false;
+            if n < this.identifiers.length {
+                thisIden = this.identifiers[n];
+                hasIden = true;
+            }
+            if n < other.identifiers.length {
+                otherIden = other.identifiers[n];
+                hasIden &= true;
+            } else {
+                hasIden &= false;
+            }
+            if hasIden {
+                result |= thisIden < otherIden;
+            } else {
+                result |= true;
+            }
+        }
+        return result;
+    }
+
+    rules {
+        (${one: DotSep} == ${two: DotSep}) => $one.eq($two);
+        (${one: DotSep} <= ${two: DotSep}) => $one.le($two);
+        (${one: DotSep} >= ${two: DotSep}) => $one.ge($two);
+        (${one: DotSep} != ${two: DotSep}) => $one.ne($two);
+        (${one: DotSep} >  ${two: DotSep}) => $one.gt($two);
+        (${one: DotSep} <  ${two: DotSep}) => $one.lt($two);
+    }
 }
 
 
 function main() {
-    var ds1: DotSep = DotSep.newFromString("abfe.abde.123.@^at.a34");
-    var ds2: DotSep = DotSep.newFromString("abfe.abde.123.@^at.a34");
+    var ds1: DotSep = DotSep.newFromString("abcd");
+    var ds2: DotSep = DotSep.newFromString("123");
     for n in ds1.identifiers {
         n.print();
     }
-    printf("%s\n\n", if ds1.identifiers[0] == ds1.identifiers[1] then "true" else "false");
-    printf("%s\n\n", if ds1.identifiers[0] <= ds1.identifiers[1] then "true" else "false");
-    printf("%s\n\n", if ds1.identifiers[0] >= ds1.identifiers[1] then "true" else "false");
-    printf("%s\n\n", if ds1.identifiers[0] != ds1.identifiers[1] then "true" else "false");
-    printf("%s\n\n", if ds1.identifiers[0] <  ds1.identifiers[1] then "true" else "false");
-    printf("%s\n\n", if ds1.identifiers[0] >  ds1.identifiers[1] then "true" else "false");
+    // printf("iden check: %s\n\n", if ds1.identifiers[0] == ds1.identifiers[1] then "true" else "false");
+    // printf("iden check: %s\n\n", if ds1.identifiers[0] <= ds1.identifiers[1] then "true" else "false");
+    // printf("iden check: %s\n\n", if ds1.identifiers[0] >= ds1.identifiers[1] then "true" else "false");
+    // printf("iden check: %s\n\n", if ds1.identifiers[0] != ds1.identifiers[1] then "true" else "false");
+    // printf("iden check: %s\n\n", if ds1.identifiers[0] <  ds1.identifiers[1] then "true" else "false");
+    // printf("iden check: %s\n\n", if ds1.identifiers[0] >  ds1.identifiers[1] then "true" else "false");
+
+    printf("%s\n\n", if ds1 == ds2 then "true" else "false");
+    printf("%s\n\n", if ds1 <= ds2 then "true" else "false");
+    printf("%s\n\n", if ds1 >= ds2 then "true" else "false");
+    printf("%s\n\n", if ds1 != ds2 then "true" else "false");
+    printf("%s\n\n", if ds1 <  ds2 then "true" else "false");
+    printf("%s\n\n", if ds1 >  ds2 then "true" else "false");
 }
