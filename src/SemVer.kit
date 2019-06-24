@@ -57,7 +57,14 @@ struct SemVer {
         var majorSize: Int = xs_CeilToInt(log10(this.major)) + 1;  // for numbers like 1000000000, log10 will report the length as one less than it is.
         var minorSize: Int = xs_CeilToInt(log10(this.minor)) + 1;  // for numbers like 1000000000, log10 will report the length as one less than it is.
         var patchSize: Int = xs_CeilToInt(log10(this.patch)) + 1;  // for numbers like 1000000000, log10 will report the length as one less than it is.
-        var out = mallocator.calloc(majorSize + minorSize + patchSize + this.prerelease.length + this.buildmeta.length + 5);
+        var size = majorSize + minorSize + patchSize + 3;
+        if this.prerelease != "" {
+            size += this.prerelease.length + 1;
+        }
+        if this.buildmeta != "" {
+            size += this.buildmeta.length + 1;
+        }
+        var out = mallocator.calloc(size);
 
         var majorChars: Ptr[Char] = *(mallocator.calloc(majorSize * sizeof(Char))): Ptr[Char];
         sprintf(majorChars,"%d", this.major);
@@ -75,11 +82,15 @@ struct SemVer {
         sprintf(patchChars,"%d", this.patch);
         strcat(out, patchChars);
 
-        strncat(out, "-", 1);
-        strcat(out, this.prerelease);
+        if this.prerelease != "" {
+            strncat(out, "-", 1);
+            strcat(out, this.prerelease);
+        }
 
-        strncat(out, "+", 1);
-        strcat(out, this.buildmeta);
+        if this.buildmeta != "" {
+            strncat(out, "+", 1);
+            strcat(out, this.buildmeta);
+        }
 
         strncat(out, "\x00", 1);
 
@@ -89,7 +100,7 @@ struct SemVer {
 
 
 function main() {
-    var sv: SemVer = SemVer.new(1, 2, 3, "alpha.1", "foo_bar_bat");
+    var sv: SemVer = SemVer.new(1, 2, 3, "foo");
     printf("%s\n", sv.toString());
     sv.incrPatch();
     printf("%s\n", sv.toString());
