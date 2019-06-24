@@ -1,0 +1,102 @@
+import kitten.ranged;
+import kitten.xs_Rounding;
+include "math.h";
+
+
+struct SemVer {
+    var major: Uint;
+    var minor: Uint;
+    var patch: Uint;
+    var prerelease: CString;
+    var buildmeta: CString;
+
+    public static function new(major: Uint, minor: Uint, patch: Uint, prerelease: CString = "", buildmeta: CString = ""): SemVer {
+        return struct Self {
+            major,
+            minor,
+            patch,
+            prerelease,
+            buildmeta
+        };
+    }
+
+    function incrMajor(prerelease: CString = "", buildmeta: CString = "") {
+        this.major += 1;
+        this.minor = 0;
+        this.patch = 0;
+        if prerelease != "" {
+            this.prerelease = prerelease;
+        }
+        if buildmeta != "" {
+            this.buildmeta = buildmeta;
+        }
+    }
+
+    function incrMinor(prerelease: CString = "", buildmeta: CString = "") {
+        this.minor += 1;
+        this.patch = 0;
+        if prerelease != "" {
+            this.prerelease = prerelease;
+        }
+        if buildmeta != "" {
+            this.buildmeta = buildmeta;
+        }
+    }
+
+    function incrPatch(prerelease: CString = "", buildmeta: CString = "") {
+        this.patch += 0;
+        if prerelease != "" {
+            this.prerelease = prerelease;
+        }
+        if buildmeta != "" {
+            this.buildmeta = buildmeta;
+        }
+    }
+
+    function toString() {
+        var majorSize: Int = xs_CeilToInt(log10(this.major)) + 1;  // for numbers like 1000000000, log10 will report the length as one less than it is.
+        var minorSize: Int = xs_CeilToInt(log10(this.minor)) + 1;  // for numbers like 1000000000, log10 will report the length as one less than it is.
+        var patchSize: Int = xs_CeilToInt(log10(this.patch)) + 1;  // for numbers like 1000000000, log10 will report the length as one less than it is.
+        var out = mallocator.calloc(majorSize + minorSize + patchSize + this.prerelease.length + this.buildmeta.length + 5);
+
+        var majorChars: Ptr[Char] = *(mallocator.calloc(majorSize * sizeof(Char))): Ptr[Char];
+        sprintf(majorChars,"%d", this.major);
+        strcpy(out, majorChars);
+
+        strncat(out, ".", 1);
+
+        var minorChars: Ptr[Char] = *(mallocator.calloc(minorSize * sizeof(Char))): Ptr[Char];
+        sprintf(minorChars,"%d", this.minor);
+        strcat(out, minorChars);
+
+        strncat(out, ".", 1);
+
+        var patchChars: Ptr[Char] = *(mallocator.calloc(patchSize * sizeof(Char))): Ptr[Char];
+        sprintf(patchChars,"%d", this.patch);
+        strcat(out, patchChars);
+
+        strncat(out, "-", 1);
+        strcat(out, this.prerelease);
+
+        strncat(out, "+", 1);
+        strcat(out, this.buildmeta);
+
+        strncat(out, "\x00", 1);
+
+        return out;
+    }
+}
+
+
+function main() {
+    var sv: SemVer = SemVer.new(1, 2, 3, "alpha.1", "foo_bar_bat");
+    printf("%s\n", sv.toString());
+    sv.incrPatch();
+    printf("%s\n", sv.toString());
+    sv.incrMinor();
+    printf("%s\n", sv.toString());
+    sv.incrPatch();
+    printf("%s\n", sv.toString());
+    sv.incrMajor();
+    printf("%s\n", sv.toString());
+}
