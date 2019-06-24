@@ -144,13 +144,19 @@ struct SemVer {
     }
 
     function le(other: SemVer) {
-        if this.major <= other.major {
-            if this.minor <= other.minor {
-                if this.patch <= other.patch {
+        if this.major < other.major {
+            return true;
+        } else if this.major == other.major {
+            if this.minor < other.minor {
+                return true;
+            } else if this.minor == other.minor {
+                if this.patch < other.patch {
+                    return true;
+                } else if this.patch == other.patch {
                     if this.prerelease == "" && other.prerelease != "" {
                         return false;
                     } else if this.prerelease != "" && other.prerelease == "" {
-                        return false;
+                        return true;
                     } else if this.prerelease == "" && other.prerelease == "" {
                         return true;
                     } else {
@@ -168,13 +174,19 @@ struct SemVer {
     }
 
     function ge(other: SemVer) {
-        if this.major >= other.major {
-            if this.minor >= other.minor {
-                if this.patch >= other.patch {
+        if this.major > other.major {
+            return true;
+        } else if this.major == other.major {
+            if this.minor > other.minor {
+                return true;
+            } else if this.minor == other.minor {
+                if this.patch > other.patch {
+                    return true;
+                } else if this.patch == other.patch {
                     if this.prerelease == "" && other.prerelease != "" {
                         return false;
                     } else if this.prerelease != "" && other.prerelease == "" {
-                        return false;
+                        return true;
                     } else if this.prerelease == "" && other.prerelease == "" {
                         return true;
                     } else {
@@ -202,11 +214,11 @@ struct SemVer {
                     return true;
                 } else {
                     if this.prerelease == "" && other.prerelease != "" {
-                        return false;
-                    } else if this.prerelease != "" && other.prerelease == "" {
-                        return false;
-                    } else if this.prerelease == "" && other.prerelease == "" {
                         return true;
+                    } else if this.prerelease != "" && other.prerelease == "" {
+                        return true;
+                    } else if this.prerelease == "" && other.prerelease == "" {
+                        return false;
                     } else {
                         return this.prerelease != other.prerelease;
                     }
@@ -216,50 +228,62 @@ struct SemVer {
     }
 
     function gt(other: SemVer) {
-        if this.major < other.major {
-            return false;
-        } else {
-            if this.minor < other.minor {
-                return false;
-            } else {
-                if this.patch < other.patch {
-                    return false;
-                } else {
+        if this.major > other.major {
+            return true;
+        } else if this.major == other.major {
+            if this.minor > other.minor {
+                return true;
+            } else if this.minor == other.minor {
+                if this.patch > other.patch {
+                    return true;
+                } else if this.patch == other.patch {
                     if this.prerelease == "" && other.prerelease != "" {
                         return false;
                     } else if this.prerelease != "" && other.prerelease == "" {
-                        return false;
-                    } else if this.prerelease == "" && other.prerelease == "" {
                         return true;
+                    } else if this.prerelease == "" && other.prerelease == "" {
+                        return false;
                     } else {
                         return DotSep.newFromString(this.prerelease) > DotSep.newFromString(other.prerelease);
                     }
+                } else {
+                    return false;
                 }
+            } else {
+                return false;
             }
+        } else {
+            return false;
         }
     }
 
     function lt(other: SemVer) {
-        if this.major > other.major {
-            return false;
-        } else {
-            if this.minor > other.minor {
-                return false;
-            } else {
-                if this.patch > other.patch {
-                    return false;
-                } else {
+        if this.major < other.major {
+            return true;
+        } else if this.major == other.major {
+            if this.minor < other.minor {
+                return true;
+            } else if this.minor == other.minor {
+                if this.patch < other.patch {
+                    return true;
+                } else if this.patch == other.patch {
                     if this.prerelease == "" && other.prerelease != "" {
                         return false;
                     } else if this.prerelease != "" && other.prerelease == "" {
-                        return false;
-                    } else if this.prerelease == "" && other.prerelease == "" {
                         return true;
+                    } else if this.prerelease == "" && other.prerelease == "" {
+                        return false;
                     } else {
                         return DotSep.newFromString(this.prerelease) < DotSep.newFromString(other.prerelease);
                     }
+                } else {
+                    return false;
                 }
+            } else {
+                return false;
             }
+        } else {
+            return false;
         }
     }
 
@@ -275,12 +299,12 @@ struct SemVer {
 
 
 function main() {
-    var sv: SemVer = SemVer.new(1, 2, 5, "foo.12.pre-2", "buildinfo");
-    var old: SemVer = SemVer.new(1, 2, 5, "foo.12.pre-1", "buildinfo");
-    // var sv: SemVer = SemVer.new(1, 2, 5);
-    // var old: SemVer = SemVer.new(1, 2, 4);
-    printf("%s\n", sv.toString());
-    printf("%s\n", old.toString());
+    // var sv1: SemVer = SemVer.new(1, 2, 5, "foo.12.pre-2", "buildinfo");
+    // var sv2: SemVer = SemVer.new(1, 2, 5, "foo.12.pre-1", "buildinfo");
+    var sv1: SemVer = SemVer.new(1, 2, 5);
+    var sv2: SemVer = SemVer.new(1, 2, 5);
+    // printf("%s\n", sv.toString());
+    // printf("%s\n", old.toString());
     // sv.incrPatch();
     // printf("%s\n", sv.toString());
     // sv.incrMinor(null, "bar_bat");
@@ -289,10 +313,30 @@ function main() {
     // printf("%s\n", sv.toString());
     // sv.incrMajor();
     // printf("%s\n\n", sv.toString());
-    printf("%s\n", if sv == old then "true" else "false");
-    printf("%s\n", if sv <= old then "true" else "false");
-    printf("%s\n", if sv >= old then "true" else "false");
-    printf("%s\n", if sv != old then "true" else "false");
-    printf("%s\n", if sv >  old then "true" else "false");
-    printf("%s\n", if sv <  old then "true" else "false");
+    // printf("%s\n", if sv1 == sv2 then "true" else "false");
+    // printf("%s\n", if sv1 <= sv2 then "true" else "false");
+    // printf("%s\n", if sv1 >= sv2 then "true" else "false");
+    // printf("%s\n", if sv1 != sv2 then "true" else "false");
+    // printf("%s\n", if sv1 >  sv2 then "true" else "false");
+    // printf("%s\n", if sv1 <  sv2 then "true" else "false");
+    var counter: Int = 0;
+    for n in 0 ... 5 {
+        for m in 0 ... 4 {
+            printf("%s | %s |   == <= >= != >  <\n", sv1.toString(), sv2.toString());
+            printf("--------------+-> ", sv1.toString(), sv2.toString());
+            printf("%s ", if sv1 == sv2 then "██" else "//");
+            printf("%s ", if sv1 <= sv2 then "██" else "//");
+            printf("%s ", if sv1 >= sv2 then "██" else "//");
+            printf("%s ", if sv1 != sv2 then "██" else "//");
+            printf("%s ", if sv1 >  sv2 then "██" else "//");
+            printf("%s\n", if sv1 <  sv2 then "██" else "//");
+            sv1.incrPatch();
+            counter++;
+            if counter % 3 == 0 {
+                sv2.incrMinor();
+            }
+        }
+        printf("\n");
+        sv1.incrMinor();
+    }
 }
