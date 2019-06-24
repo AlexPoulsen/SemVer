@@ -1,5 +1,7 @@
 import kitten.ranged;
 import kitten.xs_Rounding;
+import dotsep;
+import identifier;
 include "math.h";
 
 
@@ -112,18 +114,183 @@ struct SemVer {
 
         return out;
     }
+
+    function eq(other: SemVer) {
+        if this.major == other.major {
+            if this.minor == other.minor {
+                if this.patch == other.patch {
+                    if this.prerelease == "" && other.prerelease != "" {
+                        return false;
+                    } else if this.prerelease != "" && other.prerelease == "" {
+                        return false;
+                    } else if this.prerelease == "" && other.prerelease == "" {
+                        return true;
+                    } else if this.prerelease == other.prerelease {
+                        return true;
+                    } else {
+                        return DotSep.newFromString(this.prerelease) == DotSep.newFromString(other.prerelease);
+                    }
+                } else {
+                    return false;
+                }
+            } else {
+                return false;
+            }
+        } else {
+            return false;
+        }
+    }
+
+    function le(other: SemVer) {
+        if this.major <= other.major {
+            if this.minor <= other.minor {
+                if this.patch <= other.patch {
+                    if this.prerelease == "" && other.prerelease != "" {
+                        return false;
+                    } else if this.prerelease != "" && other.prerelease == "" {
+                        return false;
+                    } else if this.prerelease == "" && other.prerelease == "" {
+                        return true;
+                    } else {
+                        return DotSep.newFromString(this.prerelease) <= DotSep.newFromString(other.prerelease);
+                    }
+                } else {
+                    return false;
+                }
+            } else {
+                return false;
+            }
+        } else {
+            return false;
+        }
+    }
+
+    function ge(other: SemVer) {
+        if this.major >= other.major {
+            if this.minor >= other.minor {
+                if this.patch >= other.patch {
+                    if this.prerelease == "" && other.prerelease != "" {
+                        return false;
+                    } else if this.prerelease != "" && other.prerelease == "" {
+                        return false;
+                    } else if this.prerelease == "" && other.prerelease == "" {
+                        return true;
+                    } else {
+                        return DotSep.newFromString(this.prerelease) >= DotSep.newFromString(other.prerelease);
+                    }
+                } else {
+                    return false;
+                }
+            } else {
+                return false;
+            }
+        } else {
+            return false;
+        }
+    }
+
+    function ne(other: SemVer) {
+        if this.major != other.major {
+            return true;
+        } else {
+            if this.minor != other.minor {
+                return true;
+            } else {
+                if this.patch != other.patch {
+                    return true;
+                } else {
+                    if this.prerelease == "" && other.prerelease != "" {
+                        return false;
+                    } else if this.prerelease != "" && other.prerelease == "" {
+                        return false;
+                    } else if this.prerelease == "" && other.prerelease == "" {
+                        return true;
+                    } else {
+                        return this.prerelease != other.prerelease;
+                    }
+                }
+            }
+        }
+    }
+
+    function gt(other: SemVer) {
+        if this.major < other.major {
+            return false;
+        } else {
+            if this.minor < other.minor {
+                return false;
+            } else {
+                if this.patch < other.patch {
+                    return false;
+                } else {
+                    if this.prerelease == "" && other.prerelease != "" {
+                        return false;
+                    } else if this.prerelease != "" && other.prerelease == "" {
+                        return false;
+                    } else if this.prerelease == "" && other.prerelease == "" {
+                        return true;
+                    } else {
+                        return DotSep.newFromString(this.prerelease) > DotSep.newFromString(other.prerelease);
+                    }
+                }
+            }
+        }
+    }
+
+    function lt(other: SemVer) {
+        if this.major > other.major {
+            return false;
+        } else {
+            if this.minor > other.minor {
+                return false;
+            } else {
+                if this.patch > other.patch {
+                    return false;
+                } else {
+                    if this.prerelease == "" && other.prerelease != "" {
+                        return false;
+                    } else if this.prerelease != "" && other.prerelease == "" {
+                        return false;
+                    } else if this.prerelease == "" && other.prerelease == "" {
+                        return true;
+                    } else {
+                        return DotSep.newFromString(this.prerelease) < DotSep.newFromString(other.prerelease);
+                    }
+                }
+            }
+        }
+    }
+
+    rules {
+        (${one: SemVer} == ${two: SemVer}) => $one.eq($two);
+        (${one: SemVer} <= ${two: SemVer}) => $one.le($two);
+        (${one: SemVer} >= ${two: SemVer}) => $one.ge($two);
+        (${one: SemVer} != ${two: SemVer}) => $one.ne($two);
+        (${one: SemVer} >  ${two: SemVer}) => $one.gt($two);
+        (${one: SemVer} <  ${two: SemVer}) => $one.lt($two);
+    }
 }
 
 
 function main() {
-    var sv: SemVer = SemVer.new(1, 2, 3, "foo", "buildinfo");
+    var sv: SemVer = SemVer.new(1, 2, 5, "foo.12.pre-2", "buildinfo");
+    var old: SemVer = SemVer.new(1, 2, 5, "foo.12.pre-1", "buildinfo");
+    // var sv: SemVer = SemVer.new(1, 2, 5);
+    // var old: SemVer = SemVer.new(1, 2, 4);
     printf("%s\n", sv.toString());
-    sv.incrPatch();
-    printf("%s\n", sv.toString());
-    sv.incrMinor(null, "bar_bat");
-    printf("%s\n", sv.toString());
-    sv.incrPatch();
-    printf("%s\n", sv.toString());
-    sv.incrMajor();
-    printf("%s\n", sv.toString());
+    printf("%s\n", old.toString());
+    // sv.incrPatch();
+    // printf("%s\n", sv.toString());
+    // sv.incrMinor(null, "bar_bat");
+    // printf("%s\n", sv.toString());
+    // sv.incrPatch();
+    // printf("%s\n", sv.toString());
+    // sv.incrMajor();
+    // printf("%s\n\n", sv.toString());
+    printf("%s\n", if sv == old then "true" else "false");
+    printf("%s\n", if sv <= old then "true" else "false");
+    printf("%s\n", if sv >= old then "true" else "false");
+    printf("%s\n", if sv != old then "true" else "false");
+    printf("%s\n", if sv >  old then "true" else "false");
+    printf("%s\n", if sv <  old then "true" else "false");
 }
