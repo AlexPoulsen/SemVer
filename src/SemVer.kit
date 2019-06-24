@@ -287,13 +287,36 @@ struct SemVer {
         }
     }
 
+    function testUseRange(low: SemVer, high: SemVer) {
+        return (this.prerelease == "") && (this >= low) && (this <= high);
+    }
+
+    function testUseCompatable(required: SemVer) {
+        if required.minor == 0 {
+            return (this.prerelease == "") && (this >= required) && (this.major == required.major);
+        } else {
+            return (this.prerelease == "") && (this >= required) && (this.major == required.major) && (this.minor == required.minor);
+        }
+    }
+
+    function testUseExact(required: SemVer) {
+        if required.prerelease != "" {
+            return required == this;
+        } else {
+            return (this.prerelease == "") && (required == this);
+        }
+    }
+
     rules {
-        (${one: SemVer} == ${two: SemVer}) => $one.eq($two);
-        (${one: SemVer} <= ${two: SemVer}) => $one.le($two);
-        (${one: SemVer} >= ${two: SemVer}) => $one.ge($two);
-        (${one: SemVer} != ${two: SemVer}) => $one.ne($two);
-        (${one: SemVer} >  ${two: SemVer}) => $one.gt($two);
-        (${one: SemVer} <  ${two: SemVer}) => $one.lt($two);
+        (${one: SemVer} ~=  ${two: SemVer})           => $one.testUseCompatable($two);
+        (${one: SemVer} === ${two: SemVer})           => $one.testUseExact($two);
+        (${one: SemVer} ><  ${two: (SemVer, SemVer)}) => $one.testUseRange($two[0], $two[1]);
+        (${one: SemVer} ==  ${two: SemVer})           => $one.eq($two);
+        (${one: SemVer} <=  ${two: SemVer})           => $one.le($two);
+        (${one: SemVer} >=  ${two: SemVer})           => $one.ge($two);
+        (${one: SemVer} !=  ${two: SemVer})           => $one.ne($two);
+        (${one: SemVer} >   ${two: SemVer})           => $one.gt($two);
+        (${one: SemVer} <   ${two: SemVer})           => $one.lt($two);
     }
 }
 
@@ -301,8 +324,9 @@ struct SemVer {
 function main() {
     // var sv1: SemVer = SemVer.new(1, 2, 5, "foo.12.pre-2", "buildinfo");
     // var sv2: SemVer = SemVer.new(1, 2, 5, "foo.12.pre-1", "buildinfo");
-    var sv1: SemVer = SemVer.new(1, 2, 5);
-    var sv2: SemVer = SemVer.new(1, 2, 5);
+    var sv1: SemVer = SemVer.new(1, 0, 5);
+    var sv2: SemVer = SemVer.new(1, 0, 5);
+    var sv3: SemVer = SemVer.new(4, 3, 6);
     // printf("%s\n", sv.toString());
     // printf("%s\n", old.toString());
     // sv.incrPatch();
@@ -329,14 +353,18 @@ function main() {
             printf("%s ", if sv1 >= sv2 then "██" else "//");
             printf("%s ", if sv1 != sv2 then "██" else "//");
             printf("%s ", if sv1 >  sv2 then "██" else "//");
-            printf("%s\n", if sv1 <  sv2 then "██" else "//");
+            printf("%s ", if sv1 <  sv2 then "██" else "//");
+            printf("%s ", if sv1 ~= sv2 then "compatable" else "incompatable");
+            printf("%s\n", if sv2 ~= sv1 then "compatable" else "incompatable");
             sv1.incrPatch();
             counter++;
             if counter % 3 == 0 {
                 sv2.incrMinor();
             }
         }
+        // printf("%s\n", if sv2 >< (sv1, sv3) then "true" else "false");
         printf("\n");
         sv1.incrMinor();
+
     }
 }
