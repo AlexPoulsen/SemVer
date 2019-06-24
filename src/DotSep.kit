@@ -139,7 +139,7 @@ struct DotSep {
     }
 
     function ne(other: DotSep) {
-        var result: Bool = false;
+        var result: Bool = true;
         for n in 0 ... if this.identifiers.length > other.identifiers.length then this.identifiers.length else other.identifiers.length {
             var thisIden: Identifier;
             var otherIden: Identifier;
@@ -155,9 +155,9 @@ struct DotSep {
                 hasIden &= false;
             }
             if hasIden {
-                result |= thisIden != otherIden;
+                result &= thisIden != otherIden;
             } else {
-                result |= true;
+                result &= true;
             }
         }
         return result;
@@ -225,8 +225,8 @@ struct DotSep {
 
 
 function main() {
-    var ds1: DotSep = DotSep.newFromString("abcd");
-    var ds2: DotSep = DotSep.newFromString("123");
+    var ds1: DotSep = DotSep.newFromString("abc.abcd");
+    var ds2: DotSep = DotSep.newFromString("abc.123");
     for n in ds1.identifiers {
         n.print();
     }
