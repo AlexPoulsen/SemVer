@@ -20,19 +20,19 @@ struct Identifier {
 
     function eq(other: Identifier) {
         if (this.which == NUM) && (other.which == NUM) {
-            printf("num && num\n");
+            // printf("num && num\n");
             return this.num == other.num;
         } else if (this.which == NUM) && (other.which == STR) {
-            printf("num && str\n");
+            // printf("num && str\n");
             return false;
         } else if (this.which == STR) && (other.which == NUM) {
-            printf("str && num\n");
+            // printf("str && num\n");
             return false;
         } else if (this.which == STR) && (other.which == STR) {
-            printf("str && str\n");
+            // printf("str && str\n");
             var result: Bool = true;
-            printf("%s == %s\n", this.str, other.str);
-            printf("%d, %d\n", strlen(this.str), strlen(other.str));
+            // printf("%s == %s\n", this.str, other.str);
+            // printf("%d, %d\n", strlen(this.str), strlen(other.str));
             for n in 0 ... if strlen(this.str) > strlen(other.str) then strlen(this.str) else strlen(other.str) {
                 var thisChar: Char;
                 var otherChar: Char;
@@ -47,7 +47,7 @@ struct Identifier {
                     otherChar = c'\0';
                 }
                 result &= thisChar == otherChar;
-                printf("%c == %c = %s\n", thisChar, otherChar, if thisChar == otherChar then "true" else "false");
+                // printf("%c == %c = %s\n", thisChar, otherChar, if thisChar == otherChar then "true" else "false");
             }
             return result;
         } else {
@@ -57,19 +57,19 @@ struct Identifier {
 
     function le(other: Identifier) {
         if (this.which == NUM) && (other.which == NUM) {
-            printf("num && num\n");
+            // printf("num && num\n");
             return this.num <= other.num;
         } else if (this.which == NUM) && (other.which == STR) {
-            printf("num && str\n");
+            // printf("num && str\n");
             return true;
         } else if (this.which == STR) && (other.which == NUM) {
-            printf("str && num\n");
+            // printf("str && num\n");
             return false;
         } else if (this.which == STR) && (other.which == STR) {
-            printf("str && str\n");
+            // printf("str && str\n");
             var result: Bool = true;
-            printf("%s <= %s\n", this.str, other.str);
-            printf("%d, %d\n", strlen(this.str), strlen(other.str));
+            // printf("%s <= %s\n", this.str, other.str);
+            // printf("%d, %d\n", strlen(this.str), strlen(other.str));
             for n in 0 ... if strlen(this.str) > strlen(other.str) then strlen(this.str) else strlen(other.str) {
                 var thisChar: Char;
                 var otherChar: Char;
@@ -84,7 +84,7 @@ struct Identifier {
                     otherChar = c'\0';
                 }
                 result &= thisChar <= otherChar;
-                printf("%c <= %c = %s\n", thisChar, otherChar, if thisChar <= otherChar then "true" else "false");
+                // printf("%c <= %c = %s\n", thisChar, otherChar, if thisChar <= otherChar then "true" else "false");
             }
             return result;
         } else {
@@ -94,19 +94,19 @@ struct Identifier {
 
     function ge(other: Identifier) {
         if (this.which == NUM) && (other.which == NUM) {
-            printf("num && num\n");
+            // printf("num && num\n");
             return this.num >= other.num;
         } else if (this.which == NUM) && (other.which == STR) {
-            printf("num && str\n");
+            // printf("num && str\n");
             return false;
         } else if (this.which == STR) && (other.which == NUM) {
-            printf("str && num\n");
+            // printf("str && num\n");
             return true;
         } else if (this.which == STR) && (other.which == STR) {
-            printf("str && str\n");
+            // printf("str && str\n");
             var result: Bool = true;
-            printf("%s >= %s\n", this.str, other.str);
-            printf("%d, %d\n", strlen(this.str), strlen(other.str));
+            // printf("%s >= %s\n", this.str, other.str);
+            // printf("%d, %d\n", strlen(this.str), strlen(other.str));
             for n in 0 ... if strlen(this.str) > strlen(other.str) then strlen(this.str) else strlen(other.str) {
                 var thisChar: Char;
                 var otherChar: Char;
@@ -121,7 +121,7 @@ struct Identifier {
                     otherChar = c'\0';
                 }
                 result &= thisChar >= otherChar;
-                printf("%c >= %c = %s\n", thisChar, otherChar, if thisChar >= otherChar then "true" else "false");
+                // printf("%c >= %c = %s\n", thisChar, otherChar, if thisChar >= otherChar then "true" else "false");
             }
             return result;
         } else {
@@ -131,19 +131,19 @@ struct Identifier {
 
     function ne(other: Identifier) {
         if (this.which == NUM) && (other.which == NUM) {
-            printf("num && num\n");
+            // printf("num && num\n");
             return this.num != other.num;
         } else if (this.which == NUM) && (other.which == STR) {
-            printf("num && str\n");
+            // printf("num && str\n");
             return true;
         } else if (this.which == STR) && (other.which == NUM) {
-            printf("str && num\n");
+            // printf("str && num\n");
             return true;
         } else if (this.which == STR) && (other.which == STR) {
-            printf("str && str\n");
+            // printf("str && str\n");
             var result: Bool = false;
-            printf("%s == %s\n", this.str, other.str);
-            printf("%d, %d\n", strlen(this.str), strlen(other.str));
+            // printf("%s == %s\n", this.str, other.str);
+            // printf("%d, %d\n", strlen(this.str), strlen(other.str));
             for n in 0 ... if strlen(this.str) > strlen(other.str) then strlen(this.str) else strlen(other.str) {
                 var thisChar: Char;
                 var otherChar: Char;
@@ -158,7 +158,7 @@ struct Identifier {
                     otherChar = c'\0';
                 }
                 result |= thisChar != otherChar;
-                printf("%c != %c = %s\n", thisChar, otherChar, if thisChar != otherChar then "true" else "false");
+                // printf("%c != %c = %s\n", thisChar, otherChar, if thisChar != otherChar then "true" else "false");
             }
             return result;
         } else {
@@ -168,19 +168,19 @@ struct Identifier {
 
     function gt(other: Identifier) {
         if (this.which == NUM) && (other.which == NUM) {
-            printf("num && num\n");
+            // printf("num && num\n");
             return this.num > other.num;
         } else if (this.which == NUM) && (other.which == STR) {
-            printf("num && str\n");
+            // printf("num && str\n");
             return false;
         } else if (this.which == STR) && (other.which == NUM) {
-            printf("str && num\n");
+            // printf("str && num\n");
             return true;
         } else if (this.which == STR) && (other.which == STR) {
-            printf("str && str\n");
+            // printf("str && str\n");
             var result: Bool = false;
-            printf("%s > %s\n", this.str, other.str);
-            printf("%d, %d\n", strlen(this.str), strlen(other.str));
+            // printf("%s > %s\n", this.str, other.str);
+            // printf("%d, %d\n", strlen(this.str), strlen(other.str));
             for n in 0 ... if strlen(this.str) > strlen(other.str) then strlen(this.str) else strlen(other.str) {
                 var thisChar: Char;
                 var otherChar: Char;
@@ -195,7 +195,7 @@ struct Identifier {
                     otherChar = c'\0';
                 }
                 result |= thisChar > otherChar;
-                printf("%c > %c = %s\n", thisChar, otherChar, if thisChar > otherChar then "true" else "false");
+                // printf("%c > %c = %s\n", thisChar, otherChar, if thisChar > otherChar then "true" else "false");
             }
             return result;
         } else {
@@ -205,19 +205,19 @@ struct Identifier {
 
     function lt(other: Identifier) {
         if (this.which == NUM) && (other.which == NUM) {
-            printf("num && num\n");
+            // printf("num && num\n");
             return this.num < other.num;
         } else if (this.which == NUM) && (other.which == STR) {
-            printf("num && str\n");
+            // printf("num && str\n");
             return true;
         } else if (this.which == STR) && (other.which == NUM) {
-            printf("str && num\n");
+            // printf("str && num\n");
             return false;
         } else if (this.which == STR) && (other.which == STR) {
-            printf("str && str\n");
+            // printf("str && str\n");
             var result: Bool = false;
-            printf("%s < %s\n", this.str, other.str);
-            printf("%d, %d\n", strlen(this.str), strlen(other.str));
+            // printf("%s < %s\n", this.str, other.str);
+            // printf("%d, %d\n", strlen(this.str), strlen(other.str));
             for n in 0 ... if strlen(this.str) > strlen(other.str) then strlen(this.str) else strlen(other.str) {
                 var thisChar: Char;
                 var otherChar: Char;
@@ -232,7 +232,7 @@ struct Identifier {
                     otherChar = c'\0';
                 }
                 result |= thisChar < otherChar;
-                printf("%c < %c = %s\n", thisChar, otherChar, if thisChar < otherChar then "true" else "false");
+                // printf("%c < %c = %s\n", thisChar, otherChar, if thisChar < otherChar then "true" else "false");
             }
             return result;
         } else {
