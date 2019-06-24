@@ -24,32 +24,44 @@ struct SemVer {
         this.major += 1;
         this.minor = 0;
         this.patch = 0;
-        if prerelease != "" {
+        if prerelease != "" && prerelease != null {
             this.prerelease = prerelease;
+        } else if prerelease != null {
+            this.prerelease = "";
         }
-        if buildmeta != "" {
+        if buildmeta != "" && buildmeta != null {
             this.buildmeta = buildmeta;
+        } else if buildmeta != null {
+            this.buildmeta = "";
         }
     }
 
     function incrMinor(prerelease: CString = "", buildmeta: CString = "") {
         this.minor += 1;
         this.patch = 0;
-        if prerelease != "" {
+        if prerelease != "" && prerelease != null {
             this.prerelease = prerelease;
+        } else if prerelease != null {
+            this.prerelease = "";
         }
-        if buildmeta != "" {
+        if buildmeta != "" && buildmeta != null {
             this.buildmeta = buildmeta;
+        } else if buildmeta != null {
+            this.buildmeta = "";
         }
     }
 
     function incrPatch(prerelease: CString = "", buildmeta: CString = "") {
-        this.patch += 0;
-        if prerelease != "" {
+        this.patch += 1;
+        if prerelease != "" && prerelease != null {
             this.prerelease = prerelease;
+        } else if prerelease != null {
+            this.prerelease = "";
         }
-        if buildmeta != "" {
+        if buildmeta != "" && buildmeta != null {
             this.buildmeta = buildmeta;
+        } else if buildmeta != null {
+            this.buildmeta = "";
         }
     }
 
@@ -104,7 +116,7 @@ function main() {
     printf("%s\n", sv.toString());
     sv.incrPatch();
     printf("%s\n", sv.toString());
-    sv.incrMinor();
+    sv.incrMinor(null, "bar_bat");
     printf("%s\n", sv.toString());
     sv.incrPatch();
     printf("%s\n", sv.toString());
