@@ -27,11 +27,13 @@ struct SemVer {
         if prerelease != "" && prerelease != null {
             this.prerelease = prerelease;
         } else if prerelease == null {
+        } else {
             this.prerelease = "";
         }
         if buildmeta != "" && buildmeta != null {
             this.buildmeta = buildmeta;
         } else if buildmeta == null {
+        } else {
             this.buildmeta = "";
         }
     }
@@ -47,6 +49,7 @@ struct SemVer {
         if buildmeta != "" && buildmeta != null {
             this.buildmeta = buildmeta;
         } else if buildmeta == null {
+        } else {
             this.buildmeta = "";
         }
     }
@@ -61,6 +64,7 @@ struct SemVer {
         if buildmeta != "" && buildmeta != null {
             this.buildmeta = buildmeta;
         } else if buildmeta == null {
+        } else {
             this.buildmeta = "";
         }
     }
@@ -112,7 +116,7 @@ struct SemVer {
 
 
 function main() {
-    var sv: SemVer = SemVer.new(1, 2, 3, "foo");
+    var sv: SemVer = SemVer.new(1, 2, 3, "foo", "buildinfo");
     printf("%s\n", sv.toString());
     sv.incrPatch();
     printf("%s\n", sv.toString());
