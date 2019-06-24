@@ -1,0 +1,70 @@
+struct DotSep {
+    var identifiers: Vector[Identifier];
+
+    public static function newFromString(str: CString) {
+        var section: Ptr[Char];
+        var strc: Ptr[Char] = *(malloc(str.length)): Ptr[Char];
+        var identifiers: Vector[Identifier] = Vector.new(10);
+        strncpy(strc, str, str.length);
+        section = strtok(strc, ".");
+        while section != null {
+            var num: Bool = true;
+            var str: Bool = true;
+            var identifier: Identifier;
+            // printf("%s  ", section);
+            for n in 0 ... strlen(section) {
+                if (section[n] >= 48) && (section[n] <= 57) {
+                    // printf("#%c# ", section[n]);
+                } else if (section[n] == 45) || ((section[n] >= 48) && (section[n] <= 57)) || ((section[n] >= 65) && (section[n] <= 90)) || ((section[n] >= 97) && (section[n] <= 122)) {
+                    // printf("<%c> ", section[n]);
+                    num = false;
+                } else {
+                    // printf("!%c! ", section[n]);
+                    num = false;
+                    str = false;
+                }
+            }
+            if num && str {
+                str = false;
+            }
+            if num {
+                var val;
+                if section == null {
+                    val = 0;
+                }
+                var p: Ptr[Char] = section;
+                val = strtoll(section, &p, 10);
+                identifier = struct Identifier {
+                    num: val,
+                    str: "",
+                    which: IdenWhich.NUM
+                };
+            } else if str {
+                identifier = struct Identifier {
+                    num: 0,
+                    str: section,
+                    which: IdenWhich.STR
+                };
+            }
+            if num || str {
+                identifiers.push(identifier);
+                identifier.print();
+            } else {
+                printf("Error: malformed identifier `%s`\n", section);
+            }
+            // printf(" %s %s\n", if num then "t" else "f", if str then "t" else "f");
+            section = strtok(null, ".");
+        }
+        return struct Self {
+            identifiers
+        };
+    }
+}
+
+
+function main() {
+    var ds1: DotSep = DotSep.newFromString("abfe.abde.123.@^at.a34");
+    for n in ds1.identifiers {
+        n.print();
+    }
+}

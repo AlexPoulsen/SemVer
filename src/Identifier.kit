@@ -1,0 +1,20 @@
+enum IdenWhich {
+    NUM;
+    STR;
+    NULL;
+}
+
+
+struct Identifier {
+    var num: Int = 0;
+    var str: Ptr[Char] = "";
+    var which: IdenWhich = IdenWhich.NULL;
+
+    function print() {
+        if this.which == NUM {
+            printf("numeric identifier `%d`\n", this.num);
+        } else if this.which == STR {
+            printf("alphanumeric identifier `%s`\n", this.str);
+        }
+    }
+}
