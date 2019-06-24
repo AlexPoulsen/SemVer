@@ -46,11 +46,7 @@ struct Identifier {
                 } else {
                     otherChar = c'\0';
                 }
-                if thisChar == otherChar {
-                    result &= true;
-                } else {
-                    result &= false;
-                }
+                result &= thisChar == otherChar;
                 printf("%c == %c = %s\n", thisChar, otherChar, if thisChar == otherChar then "true" else "false");
             }
             return result;
@@ -87,11 +83,7 @@ struct Identifier {
                 } else {
                     otherChar = c'\0';
                 }
-                if thisChar <= otherChar {
-                    result &= true;
-                } else {
-                    result &= false;
-                }
+                result &= thisChar <= otherChar;
                 printf("%c <= %c = %s\n", thisChar, otherChar, if thisChar <= otherChar then "true" else "false");
             }
             return result;
@@ -128,11 +120,7 @@ struct Identifier {
                 } else {
                     otherChar = c'\0';
                 }
-                if thisChar >= otherChar {
-                    result &= true;
-                } else {
-                    result &= false;
-                }
+                result &= thisChar >= otherChar;
                 printf("%c >= %c = %s\n", thisChar, otherChar, if thisChar >= otherChar then "true" else "false");
             }
             return result;
@@ -169,11 +157,7 @@ struct Identifier {
                 } else {
                     otherChar = c'\0';
                 }
-                if thisChar != otherChar {
-                    result |= true;
-                } else {
-                    result |= false;
-                }
+                result |= thisChar != otherChar;
                 printf("%c != %c = %s\n", thisChar, otherChar, if thisChar != otherChar then "true" else "false");
             }
             return result;
@@ -210,11 +194,7 @@ struct Identifier {
                 } else {
                     otherChar = c'\0';
                 }
-                if thisChar > otherChar {
-                    result |= true;
-                } else {
-                    result |= false;
-                }
+                result |= thisChar > otherChar;
                 printf("%c > %c = %s\n", thisChar, otherChar, if thisChar > otherChar then "true" else "false");
             }
             return result;
@@ -251,11 +231,7 @@ struct Identifier {
                 } else {
                     otherChar = c'\0';
                 }
-                if thisChar < otherChar {
-                    result |= true;
-                } else {
-                    result |= false;
-                }
+                result |= thisChar < otherChar;
                 printf("%c < %c = %s\n", thisChar, otherChar, if thisChar < otherChar then "true" else "false");
             }
             return result;
